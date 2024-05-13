@@ -1,0 +1,128 @@
+{% extends 'layouts/default/page.html' %}
+{% load i18n %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
+    {% else %}
+        {% trans 'You are a guest.' %}
+    {% endif %}
+    
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{user.first_name.title|default:'Guest'}}</h1>
+        <p class="lead">
+            This is <b>Speedsnap</b>
+        </p>
+        <!-- Tambahkan tombol untuk memulai animasi -->
+        <button id="startAnimationBtn" class="btn btn-success">SpeedTest</button>
+        <canvas id="myChart" width="400" height="200" style="display:none;"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Fungsi untuk memulai animasi grafik
+        function startAnimation() {
+            // Menampilkan canvas setelah tombol ditekan
+            document.getElementById('myChart').style.display = 'block';
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from(Array(100), (_, i) => i + 1), // Label waktu dalam detik (1 sampai 100)
+                    datasets: [{
+                        label: 'Download',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 2,
+                        data: Array(100).fill(0), // Data awal untuk Download
+                        fill: false
+                    },{
+                        label: 'Upload',
+                        borderColor: 'rgb(192, 75, 192)',
+                        borderWidth: 2,
+                        data: Array(100).fill(0), // Data awal untuk Upload
+                        fill: false
+                    },{
+                        label: 'Latency',
+                        borderColor: 'rgb(192, 192, 75)',
+                        borderWidth: 2,
+                        data: Array(100).fill(0), // Data awal untuk Latency
+                        fill: false
+                    }]
+                },
+                options: {
+                    animation: {
+                        duration: 0, // Animasi dinonaktifkan agar kita bisa mengendalikan perubahan data secara manual
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            ticks: {
+                                stepSize: 10, // Setiap langkah pada sumbu-x mewakili 1 detik
+                                callback: function(value, index, values) {
+                                    return value + 'ms'; // Menambahkan 's' untuk menunjukkan detik
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Data awal
+            const data = {
+                labels: Array.from(Array(100), (_, i) => i + 1), // Label waktu dalam detik (1 sampai 100)
+                datasets: [{
+                    label: 'Download',
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 2,
+                    data: Array(100).fill(0), // Data awal untuk Download
+                    fill: false
+                },{
+                    label: 'Upload',
+                    borderColor: 'rgb(192, 75, 192)',
+                    borderWidth: 2,
+                    data: Array(100).fill(0), // Data awal untuk Upload
+                    fill: false
+                },{
+                    label: 'Latency',
+                    borderColor: 'rgb(192, 192, 75)',
+                    borderWidth: 2,
+                    data: Array(100).fill(0), // Data awal untuk Latency
+                    fill: false
+                }]
+            };
+
+            // Memulai animasi perubahan data
+            let counter = 0; // Counter untuk melacak waktu
+            const animation = setInterval(function () {
+                // Menghasilkan data acak untuk setiap dataset
+                const newDataDownload = Math.floor(Math.random() * 100); // Misalnya, data acak untuk Download
+                const newDataUpload = Math.floor(Math.random() * 100); // Misalnya, data acak untuk Upload
+                const newDataLatency = Math.floor(Math.random() * 100); // Misalnya, data acak untuk Latency
+                
+                // Memperbarui data pada grafik
+                data.datasets[0].data[counter] = newDataDownload;
+                data.datasets[1].data[counter] = newDataUpload;
+                data.datasets[2].data[counter] = newDataLatency;
+                
+                // Memperbarui grafik
+                chart.data = data;
+                chart.update();
+
+                // Menghentikan animasi setelah 10 detik
+                counter++;
+                if (counter >= 100) {
+                    clearInterval(animation);
+                }
+
+            }, 100); // Perubahan data setiap 0.1 detik
+        }
+
+        // Menambahkan event listener untuk tombol
+        document.getElementById('startAnimationBtn').addEventListener('click', startAnimation);
+    </script>
+{% endblock %}
