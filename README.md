@@ -1,10 +1,14 @@
 # Tutorial Instalasi dan Penggunaan Speedsnap
 
-## Langkah 1: Instalasi Python
+## Langkah 1.1: Instalasi Python
 
 Pertama-tama, pastikan Python sudah terinstal di komputer Anda. Jika belum, Anda dapat mengunduh installer Python terbaru dari [situs resmi Python](https://www.python.org/downloads/).
 
 - **Pastikan Anda memilih opsi "Add Python to PATH" saat menginstal.**
+
+## Langkah 1.2: Instalasi Git
+
+Pertama-tama, pastikan Git sudah terinstal di komputer Anda. Jika belum, Anda dapat mengunduh installer Git terbaru dari [situs resmi Git](https://git-scm.com/downloads/) dan menginstalnya.
 
 ## Langkah 2: Instalasi Virtual Environment
 
