@@ -62,7 +62,20 @@ Di dalam folder speedsnap, Anda akan menemukan file requirements.txt yang berisi
 pip install -r requirements.txt
 ```
 
-## Langkah 7: Jalankan Proyek
+
+Untuk membuat akun admin di CLI pada proyek Speedsnap, Anda bisa mengikuti langkah-langkah berikut:
+
+## Langkah 7: Buat Akun Admin
+Setelah lingkungan virtual diaktifkan, Anda dapat membuat akun admin dengan menjalankan perintah berikut:
+
+```bash
+py manage.py createsuperuser
+```
+Perintah ini akan meminta Anda untuk memasukkan detail akun admin seperti username, alamat email (opsional), dan password. Setelah Anda mengisi informasi yang diperlukan, akun admin akan dibuat.
+
+Setelah akun admin berhasil dibuat, Anda dapat menggunakan kredensial ini untuk masuk ke panel admin Speedsnap dan mengelola aplikasi sesuai kebutuhan Anda.
+
+## Langkah 8: Jalankan Proyek
 Sekarang, Anda dapat menjalankan proyek Speedsnap dengan menggunakan perintah berikut:
 
 ```bash
@@ -71,7 +84,7 @@ py manage.py runserver
 
 Ini akan menjalankan server pengembangan lokal yang bisa diakses melalui browser.
 
-## Langkah 8: Akses Lokalhost
+## Langkah 9: Akses Lokalhost
 Buka browser web Anda dan masukkan URL berikut:
 
 ```bash
